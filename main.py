@@ -29,17 +29,13 @@ class SecondWindow(MDScreen):
 class WindowManager(ScreenManager):
     pass
 
-
 class MyGridLayout(GridLayout):
+
     dialog = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.dynamic_fields = []
-        
-
-    def close_dialog(self, obj):
-        self.dialog.dismiss()
 
 
     def limpiar(self):
@@ -53,14 +49,8 @@ class MyGridLayout(GridLayout):
         if not self.dialog:
             self.dialog = MDDialog(
                 title="Error",
-                text="Debe escribir un numero",
-                buttons=[
-                    MDFlatButton(
-                        text="OK",
-                        theme_text_color="Custom",
-                        on_release = self.close_dialog
-                    ),
-                ],
+                text="No dejar campos vacíos"
+                #buttons = [MDFlatButton(text="OK", on_release = Dialog.dismiss(Dialog))]
             )
         self.dialog.open()
 
@@ -98,6 +88,7 @@ class MyGridLayout(GridLayout):
         self.add_widget(new_name_field)
         self.dynamic_fields.extend([new_name_field])
 
+
     def calcular_func(self):  
         # Tomo los datos de los textfield que haya 
         text_inputs = []
@@ -107,17 +98,22 @@ class MyGridLayout(GridLayout):
 
         # Chequeo si son numeros
         for i in range(0, len(text_inputs), 2):
-            if text_inputs[i].isdigit():
+            try:
+                if text_inputs[i].isdigit():
 
-                # Si es numerico, dispongo de la información "nombre":"monto"
-                
-                result = []
-                for i in range(0, len(text_inputs), 2):
-                    result.append((text_inputs[i+1], int(text_inputs[i])),)
+                    # Si es numerico, dispongo de la información "nombre":"monto"
+                    result = []
+                    for i in range(0, len(text_inputs), 2):
+                        result.append((text_inputs[i+1], int(text_inputs[i])),)
 
-                global amistades_claras
-                amistades_claras = calcular(result)
-            else:
+                    global amistades_claras
+                    amistades_claras = calcular(result)
+
+                else:
+                    amistades_claras = ""
+                    result = self.show_alert_dialog()
+                    
+            except Exception:
                 amistades_claras = ""
                 result = self.show_alert_dialog()
             
@@ -126,37 +122,41 @@ class MyGridLayout(GridLayout):
 
 class MySecondGridLayout(GridLayout):
 
-    def setLabel(self):
+    def setLabel(self):  # sourcery skip: extract-method
+
         # Remove existing labels from the widget
         for child in self.children[:]:
             if isinstance(child, MDLabel):
                 self.remove_widget(child)
 
-        todos_deben = MDLabel(text=amistades_claras[0])
-        todos_deben.font_size = 30
-        todos_deben.color = "#00796B"
-        todos_deben.bold
-        todos_deben.size_hint_x = 0.9
-        self.add_widget(todos_deben)
+        try:
+            todos_deben = MDLabel(text=amistades_claras[0])
+            todos_deben.font_size = 30
+            todos_deben.color = "#00796B"
+            todos_deben.bold
+            todos_deben.size_hint_x = 0.9
+            self.add_widget(todos_deben)
 
-        # Quien debe a quien LABEL
-        for amistad in amistades_claras[1:]:
-            label_amistad = MDLabel(text=amistad, markup=True)
-            label_amistad.adaptive_height = True
-            label_amistad.halign = "center"
-            label_amistad.font_size = 30
-            label_amistad.size_hint_x = 0.5
+            # Quien debe a quien LABEL
+            for amistad in amistades_claras[1:]:
+                label_amistad = MDLabel(text=amistad, markup=True)
+                label_amistad.adaptive_height = True
+                label_amistad.halign = "center"
+                label_amistad.font_size = 30
+                label_amistad.size_hint_x = 0.5
 
+                # Set the label text with the first and last words colored
+                words = amistad.split(" ")
+                label_text = f"[color=#009688]{words[0].title()}[/color]"
+                for word in words[1:-1]:
+                    label_text += f" {word}"
+                label_text += f" [color=#009688]{words[-1].title()}[/color]"
+                label_amistad.text = label_text
+                
+                self.add_widget(label_amistad)
 
-            # Set the label text with the first and last words colored
-            words = amistad.split(" ")
-            label_text = f"[color=#009688]{words[0]}[/color]"
-            for word in words[1:-1]:
-                label_text += f" {word}"
-            label_text += f" [color=#009688]{words[-1]}[/color]"
-            label_amistad.text = label_text
-            
-            self.add_widget(label_amistad)
+        except Exception:
+            MyGridLayout.show_alert_dialog(MyGridLayout)
 
 
 class AmistadesClaras(MDApp):
