@@ -8,7 +8,6 @@ from kivy.uix.gridlayout import GridLayout
 from kivymd.uix.label import MDLabel
 from kivy.lang import Builder
 from calculate import calcular
-from kivymd.uix.button import MDFlatButton  
 from kivymd.uix.dialog import MDDialog
 from kivy.core.window import Window
 from kivy.utils import platform
