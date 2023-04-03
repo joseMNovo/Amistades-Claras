@@ -67,6 +67,79 @@ WindowManager:
                 
                 MDTextField:
                     id: primer_nombre
+                    text: "Jose"
+                    hint_text: "Ingresar nombre"
+                    helper_text_mode: "on_focus"
+                    icon_right: "account"
+                    pos_hint: {"center_x": .5, "top": 1}
+                    line_color_focus: 0, 0, 0, 0
+                    font_size: 50
+                    adaptive_height: True
+
+
+                MDTextField:
+                    id: primer_monto
+                    hint_text: "Ingresar monto"
+                    helper_text_mode: "on_focus"
+                    text: 0
+                    input_filter: "int"
+                    icon_right: "cash"
+                    pos_hint: {"center_x": .5, "top": 1}
+                    line_color_focus: 0, 0, 0, 0
+                    font_size: 50
+                    adaptive_height: True
+                    markup: True
+
+                MDTextField:
+                    id: segundo_nombre
+                    hint_text: "Ingresar nombre"
+                    text: "Ger"
+                    helper_text_mode: "on_focus"
+                    icon_right: "account"
+                    pos_hint: {"center_x": .5, "top": 1}
+                    font_size: 50
+                    adaptive_height: True
+
+                MDTextField:
+                    id: segundo_monto
+                    text: 5600
+                    hint_text: "Ingresar monto"
+                    helper_text_mode: "on_focus"
+                    icon_right: "cash"
+                    input_filter: "int"
+                    pos_hint: {"center_x": .5, "top": 1}
+                    font_size: 50
+                    adaptive_height: True
+                    markup: True
+###########################################################################
+                MDTextField:
+                    id: primer_nombre
+                    hint_text: "Ingresar nombre"
+                    helper_text_mode: "on_focus"
+                    text: "Bruno"
+                    icon_right: "account"
+                    pos_hint: {"center_x": .5, "top": 1}
+                    line_color_focus: 0, 0, 0, 0
+                    font_size: 50
+                    adaptive_height: True
+
+
+                MDTextField:
+                    id: primer_monto
+                    hint_text: "Ingresar monto"
+                    text: 3000
+                    helper_text_mode: "on_focus"
+                    input_filter: "int"
+                    icon_right: "cash"
+                    pos_hint: {"center_x": .5, "top": 1}
+                    line_color_focus: 0, 0, 0, 0
+                    font_size: 50
+                    adaptive_height: True
+                    markup: True
+
+                MDTextField:
+                    id: primer_nombre
+                    text: "Facu"
                     hint_text: "Ingresar nombre"
                     helper_text_mode: "on_focus"
                     icon_right: "account"
@@ -81,33 +154,14 @@ WindowManager:
                     hint_text: "Ingresar monto"
                     helper_text_mode: "on_focus"
                     input_filter: "int"
+                    text: 10
                     icon_right: "cash"
                     pos_hint: {"center_x": .5, "top": 1}
                     line_color_focus: 0, 0, 0, 0
                     font_size: 50
                     adaptive_height: True
                     markup: True
-
-                MDTextField:
-                    id: segundo_nombre
-                    hint_text: "Ingresar nombre"
-                    helper_text_mode: "on_focus"
-                    icon_right: "account"
-                    pos_hint: {"center_x": .5, "top": 1}
-                    font_size: 50
-                    adaptive_height: True
-
-                MDTextField:
-                    id: segundo_monto
-                    hint_text: "Ingresar monto"
-                    helper_text_mode: "on_focus"
-                    icon_right: "cash"
-                    input_filter: "int"
-                    pos_hint: {"center_x": .5, "top": 1}
-                    font_size: 50
-                    adaptive_height: True
-                    markup: True
-
+##############################################################
         FloatLayout:
             size_hint: 1, None
             height: "20dp"

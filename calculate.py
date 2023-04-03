@@ -58,7 +58,7 @@ def calcular(*args):
                         if amount_owed == 0:
                             break
         return debts, todos_deben
-  
+    print(f"Personas: {personas}")
     cuentas, todos_deben = split_expenses(personas)
 
     amistades_claras = [f"Todos deben: {round(todos_deben)}"]
@@ -72,4 +72,22 @@ def calcular(*args):
 
 
 
+""" amistades = [{"ger":5600}, {"facu":1200}, {"bruno": 7500}, {"pepe": 0}, {"ariel":0}, {"ale": 0}]
 
+total = []
+total_a_pagar = 0
+for amistad in amistades:
+    total.append(list(amistad.values())[0])
+
+total_a_pagar = sum(total) / len(total)
+
+
+print(round(total_a_pagar, 2))
+
+for amistad in amistades:
+    puso = list(amistad.values())[0]
+    if puso < total_a_pagar:
+        print(f"{list(amistad.keys())[0]} debe {round(total_a_pagar - puso, 2)}")
+    
+    elif puso > total_a_pagar:
+        print(f"A {list(amistad.keys())[0]} le deben {round(puso - total_a_pagar, 2)}") """
