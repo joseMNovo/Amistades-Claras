@@ -33,7 +33,7 @@ WindowManager:
                 pos_hint:{"center_x": 0.50, "center_y": 0.5}
                 text_color: "#FFFFFF"
                 
-                disabled: True if primer_monto.text == '' or segundo_monto.text == '' or primer_nombre.text == '' or segundo_nombre.text == '' else False
+                disabled: True if primer_nombre.text == '' or segundo_nombre.text == '' else False
 
                 on_release:
                     root.ids.grid_layout.calcular_func()
@@ -67,7 +67,6 @@ WindowManager:
                 
                 MDTextField:
                     id: primer_nombre
-                    text: "Jose"
                     hint_text: "Ingresar nombre"
                     helper_text_mode: "on_focus"
                     icon_right: "account"
@@ -81,7 +80,6 @@ WindowManager:
                     id: primer_monto
                     hint_text: "Ingresar monto"
                     helper_text_mode: "on_focus"
-                    text: 0
                     input_filter: "int"
                     icon_right: "cash"
                     pos_hint: {"center_x": .5, "top": 1}
@@ -93,7 +91,6 @@ WindowManager:
                 MDTextField:
                     id: segundo_nombre
                     hint_text: "Ingresar nombre"
-                    text: "Ger"
                     helper_text_mode: "on_focus"
                     icon_right: "account"
                     pos_hint: {"center_x": .5, "top": 1}
@@ -102,7 +99,6 @@ WindowManager:
 
                 MDTextField:
                     id: segundo_monto
-                    text: 5600
                     hint_text: "Ingresar monto"
                     helper_text_mode: "on_focus"
                     icon_right: "cash"
@@ -111,57 +107,8 @@ WindowManager:
                     font_size: 50
                     adaptive_height: True
                     markup: True
-###########################################################################
-                MDTextField:
-                    id: primer_nombre
-                    hint_text: "Ingresar nombre"
-                    helper_text_mode: "on_focus"
-                    text: "Bruno"
-                    icon_right: "account"
-                    pos_hint: {"center_x": .5, "top": 1}
-                    line_color_focus: 0, 0, 0, 0
-                    font_size: 50
-                    adaptive_height: True
 
 
-                MDTextField:
-                    id: primer_monto
-                    hint_text: "Ingresar monto"
-                    text: 3000
-                    helper_text_mode: "on_focus"
-                    input_filter: "int"
-                    icon_right: "cash"
-                    pos_hint: {"center_x": .5, "top": 1}
-                    line_color_focus: 0, 0, 0, 0
-                    font_size: 50
-                    adaptive_height: True
-                    markup: True
-
-                MDTextField:
-                    id: primer_nombre
-                    text: "Facu"
-                    hint_text: "Ingresar nombre"
-                    helper_text_mode: "on_focus"
-                    icon_right: "account"
-                    pos_hint: {"center_x": .5, "top": 1}
-                    line_color_focus: 0, 0, 0, 0
-                    font_size: 50
-                    adaptive_height: True
-
-
-                MDTextField:
-                    id: primer_monto
-                    hint_text: "Ingresar monto"
-                    helper_text_mode: "on_focus"
-                    input_filter: "int"
-                    text: 10
-                    icon_right: "cash"
-                    pos_hint: {"center_x": .5, "top": 1}
-                    line_color_focus: 0, 0, 0, 0
-                    font_size: 50
-                    adaptive_height: True
-                    markup: True
-##############################################################
         FloatLayout:
             size_hint: 1, None
             height: "20dp"

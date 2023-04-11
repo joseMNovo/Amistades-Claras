@@ -15,10 +15,10 @@ from kivy.utils import platform
 
 Window.fullscreen = 'auto'
 
-if platform == "android":
+""" if platform == "android":
     from android.permissions import request_permissions, Permission
     request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
-
+ """
 class MainWindow(MDScreen):
     pass
 
@@ -31,6 +31,7 @@ class WindowManager(ScreenManager):
 class MyGridLayout(GridLayout):
 
     dialog = None
+    amistades_claras = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -88,38 +89,41 @@ class MyGridLayout(GridLayout):
         self.dynamic_fields.extend([new_name_field])
 
 
-    def calcular_func(self):  
-        # Tomo los datos de los textfield que haya 
-        text_inputs = []
-        for child in self.children:
-            if isinstance(child, MDTextField):
-                text_inputs.append(child.text)
-
+    def calcular_func(self):    # sourcery skip: extract-method, split-or-ifs
+        text_inputs = [
+            child.text for child in self.children if isinstance(child, MDTextField)
+        ]
+        print(f"text_inputs: {text_inputs}")
         # Chequeo si son numeros
-        for i in range(0, len(text_inputs), 2):
-            try:
-                if text_inputs[i].isdigit():
+        try:
+            for i in range(0, len(text_inputs), 2):
 
-                    # Si es numerico, dispongo de la información "nombre":"monto"
-                    result = []
-                    for i in range(0, len(text_inputs), 2):
-                        result.append((text_inputs[i+1], int(text_inputs[i])),)
+                if text_inputs[i].isdigit() or text_inputs[i] == "":
+                    text_inputs[i] = 0 if text_inputs[i] == "" else text_inputs[i]
 
-                    global amistades_claras
-                    amistades_claras = calcular(result)
 
                 else:
-                    amistades_claras = ""
-                    result = self.show_alert_dialog()
-                    
-            except Exception:
-                amistades_claras = ""
-                result = self.show_alert_dialog()
+                    print("inside else")
+                    self.show_alert_dialog()
+
+            print(f"text_inputs: {text_inputs}")
             
-        return result 
+            global amistades_claras
+            amistades_claras = calcular(text_inputs)
+            print(f"amistades_claras in main: {amistades_claras}")
+
+            return amistades_claras
+    
+        except Exception:
+            self.show_alert_dialog()
+            
+            
 
 
 class MySecondGridLayout(GridLayout):
+    
+    amistades_claras = MyGridLayout.amistades_claras
+    print(f"amistades_claras_MySecondGridLayout: {amistades_claras}")
 
     def setLabel(self):  # sourcery skip: extract-method
 
@@ -128,7 +132,7 @@ class MySecondGridLayout(GridLayout):
             if isinstance(child, MDLabel):
                 self.remove_widget(child)
 
-        try:
+
             todos_deben = MDLabel(text=amistades_claras[0])
             todos_deben.font_size = 30
             todos_deben.color = "#00796B"
@@ -146,16 +150,27 @@ class MySecondGridLayout(GridLayout):
 
                 # Set the label text with the first and last words colored
                 words = amistad.split(" ")
-                label_text = f"[color=#009688]{words[0].title()}[/color]"
-                for word in words[1:-1]:
-                    label_text += f" {word}"
-                label_text += f" [color=#009688]{words[-1].title()}[/color]"
-                label_amistad.text = label_text
-                
-                self.add_widget(label_amistad)
 
-        except Exception:
-            MyGridLayout.show_alert_dialog(MyGridLayout)
+                if words[0] == "A":
+                    label_text = f"{words[0]}" + f" [color=#0099ff]{words[1].title()}[/color]"
+
+                    for word in words[2:-1]:
+                        label_text += f" {word}"
+
+                else:
+                    label_text = f"[color=#009688]{words[0].title()}[/color]"
+
+                    for word in words[1:-1]:
+                        label_text += f" {word}"
+
+                label_text += f" [color=#009688]{words[-1].title()}[/color]"
+
+                label_amistad.text = label_text
+
+                self.add_widget(label_amistad)
+                
+
+
 
 
 class AmistadesClaras(MDApp):

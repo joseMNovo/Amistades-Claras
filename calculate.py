@@ -1,93 +1,25 @@
-def calcular(*args):
-    personas = {}
-    for p in args:
-        for persona, monto in p:
-            if persona in personas:
-                personas[persona].append(("Total", monto))
-            else:
-                personas[persona] = [("Total", monto)]
+def calcular(amistades):
+    print(f"amistades in calculate: {amistades}")
 
-    
-    def split_expenses(expenses):
-    
-        # Step 1: Calculate each person's total expenses
-        totals = {}
-        for payer, expenses_list in expenses.items():
-            for expense in expenses_list:
-                _, amount = expense
-                if payer not in totals:
-                    totals[payer] = amount
-                else:
-                    totals[payer] += amount
+    amistades = {amistades[i+1]: int(amistades[i]) for i in range(0, len(amistades), 2)}
 
-        # Step 2: Calculate the group's total expenses and the average expense per person
-        group_total = sum(totals.values())
-        num_people = len(expenses)
-        avg_expense = group_total / num_people
-        todos_deben = avg_expense            
+    total = [amistades[a] for a in amistades]
+    total_a_pagar = sum(total) / len(total)
+    total_a_pagar = round(total_a_pagar, 2)
+    total_a_pagar_sindos = round(total_a_pagar)
 
+    amistades_claras = [f"Total por persona: {total_a_pagar} ({total_a_pagar_sindos})"]
 
-        # Step 3: Calculate how much each person owes or is owed
-        debts = {}
-        for payer, total_paid in totals.items():
-            amount_owed = total_paid - avg_expense
-            if amount_owed > 0:
-                # This person is owed money
-                for payee, payee_total in totals.items():
-                    if payee_total - avg_expense < 0:
-                        # This person owes money and can pay some of what they owe
-                        amount_to_pay = min(amount_owed, avg_expense - payee_total)
-                        if payer not in debts:
-                            debts[payer] = {payee: round(amount_to_pay)}
-                        else:
-                            debts[payer][payee] = round(amount_to_pay)
-                        amount_owed -= amount_to_pay
-                        if amount_owed == 0:
-                            break
-            elif amount_owed < 0:
-                # This person owes money
-                for payee, payee_total in totals.items():
-                    if payee_total - avg_expense > 0:
-                        # This person is owed money and can be paid some of what they are owed
-                        amount_to_receive = min(-amount_owed, payee_total - avg_expense)
-                        if payer not in debts:
-                            debts[payer] = {payee: round(-amount_to_receive)}
-                        else:
-                            debts[payer][payee] = round(-amount_to_receive)
-                        amount_owed += amount_to_receive
-                        if amount_owed == 0:
-                            break
-        return debts, todos_deben
-    print(f"Personas: {personas}")
-    cuentas, todos_deben = split_expenses(personas)
+    for amistad, puso in amistades.items():
+        if puso < total_a_pagar:
+            amistades_claras.append(f"{amistad} debe {round(total_a_pagar - puso, 2)}")
+            #print(f"{amistad} debe {round(total_a_pagar - puso, 2)}")
 
-    amistades_claras = [f"Todos deben: {round(todos_deben)}"]
-    for c in cuentas:
-        for d in cuentas[c]:
-            if cuentas[c][d] < 0:
-                deuda = str(cuentas[c][d])
-                amistades_claras.append(f"{c} le debe {deuda[1:]} a {d}")
+        elif puso > total_a_pagar:
+            amistades_claras.append(f"A {amistad} le deben {round(puso - total_a_pagar, 2)}")
+            #print(f"A {amistad} le deben {round(puso - total_a_pagar, 2)}")
 
+    print(f"amistades_claras in calculate: {amistades_claras}")
     return amistades_claras
 
 
-
-""" amistades = [{"ger":5600}, {"facu":1200}, {"bruno": 7500}, {"pepe": 0}, {"ariel":0}, {"ale": 0}]
-
-total = []
-total_a_pagar = 0
-for amistad in amistades:
-    total.append(list(amistad.values())[0])
-
-total_a_pagar = sum(total) / len(total)
-
-
-print(round(total_a_pagar, 2))
-
-for amistad in amistades:
-    puso = list(amistad.values())[0]
-    if puso < total_a_pagar:
-        print(f"{list(amistad.keys())[0]} debe {round(total_a_pagar - puso, 2)}")
-    
-    elif puso > total_a_pagar:
-        print(f"A {list(amistad.keys())[0]} le deben {round(puso - total_a_pagar, 2)}") """
