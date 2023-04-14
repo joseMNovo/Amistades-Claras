@@ -6,9 +6,8 @@ def calcular(amistades):
     total = [amistades[a] for a in amistades]
     total_a_pagar = sum(total) / len(total)
     total_a_pagar = round(total_a_pagar, 2)
-    total_a_pagar_sindos = round(total_a_pagar)
 
-    amistades_claras = [f"Total por persona: {total_a_pagar} ({total_a_pagar_sindos})"]
+    amistades_claras = [f"Total por persona: {total_a_pagar}"]
 
     for amistad, puso in amistades.items():
         if puso < total_a_pagar:

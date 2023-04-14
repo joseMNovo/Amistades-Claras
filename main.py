@@ -97,14 +97,9 @@ class MyGridLayout(GridLayout):
         # Chequeo si son numeros
         try:
             for i in range(0, len(text_inputs), 2):
-
-                if text_inputs[i].isdigit() or text_inputs[i] == "":
-                    text_inputs[i] = 0 if text_inputs[i] == "" else text_inputs[i]
-
-
-                else:
-                    print("inside else")
-                    self.show_alert_dialog()
+                
+                if text_inputs[i] == "":
+                    text_inputs[i] = 0
 
             print(f"text_inputs: {text_inputs}")
             
@@ -133,41 +128,41 @@ class MySecondGridLayout(GridLayout):
                 self.remove_widget(child)
 
 
-            todos_deben = MDLabel(text=amistades_claras[0])
-            todos_deben.font_size = 30
-            todos_deben.color = "#00796B"
-            todos_deben.bold
-            todos_deben.size_hint_x = 0.9
-            self.add_widget(todos_deben)
+        todos_deben = MDLabel(text=amistades_claras[0])
+        todos_deben.font_size = 30
+        todos_deben.color = "#00796B"
+        todos_deben.bold
+        todos_deben.size_hint_x = 0.9
+        self.add_widget(todos_deben)
 
-            # Quien debe a quien LABEL
-            for amistad in amistades_claras[1:]:
-                label_amistad = MDLabel(text=amistad, markup=True)
-                label_amistad.adaptive_height = True
-                label_amistad.halign = "center"
-                label_amistad.font_size = 30
-                label_amistad.size_hint_x = 0.5
+        # Quien debe a quien LABEL
+        for amistad in amistades_claras[1:]:
+            label_amistad = MDLabel(text=amistad, markup=True)
+            label_amistad.adaptive_height = True
+            label_amistad.halign = "center"
+            label_amistad.font_size = 30
+            label_amistad.size_hint_x = 0.5
 
-                # Set the label text with the first and last words colored
-                words = amistad.split(" ")
+            # Set the label text with the first and last words colored
+            words = amistad.split(" ")
 
-                if words[0] == "A":
-                    label_text = f"{words[0]}" + f" [color=#0099ff]{words[1].title()}[/color]"
+            if words[0] == "A":
+                label_text = f"{words[0]}" + f" [color=#0099ff]{words[1].title()}[/color]"
 
-                    for word in words[2:-1]:
-                        label_text += f" {word}"
+                for word in words[2:-1]:
+                    label_text += f" {word}"
 
-                else:
-                    label_text = f"[color=#009688]{words[0].title()}[/color]"
+            else:
+                label_text = f"[color=#009688]{words[0].title()}[/color]"
 
-                    for word in words[1:-1]:
-                        label_text += f" {word}"
+                for word in words[1:-1]:
+                    label_text += f" {word}"
 
-                label_text += f" [color=#009688]{words[-1].title()}[/color]"
+            label_text += f" [color=#009688]{words[-1].title()}[/color]"
 
-                label_amistad.text = label_text
+            label_amistad.text = label_text
 
-                self.add_widget(label_amistad)
+            self.add_widget(label_amistad)
                 
 
 
